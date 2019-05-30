@@ -4,7 +4,7 @@ This web application will allow a user to daily log their moods, physical sympto
 
 The main page of this website will feature the following menu options/pages:
 
-##Main Menu
+## Main Menu
 
 - Home Page (Landing page)
 - Login/Sign-up -> Sign-up form
@@ -12,7 +12,7 @@ The main page of this website will feature the following menu options/pages:
 - Useful Resources (optional)
 - Main Menu (User Login):
 
-##Once a User logs in they will see the following items in the main menu.
+## Once a User logs in they will see the following items in the main menu.
 
 - Home/welcome - Landing page
 - Tracking page - Form to track their symptoms
