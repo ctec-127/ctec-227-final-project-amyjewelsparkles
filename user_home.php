@@ -9,7 +9,10 @@ include_once 'inc/layout/navbar.php';
 ?>
 <div class="container">
 
-    <h1>Welcome to Self-Cared <?= isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'New User!' ?></h1>
+    <h1>Welcome to Self-Cared <?= isset($_SESSION['first_name']) ? $_SESSION['first_name'] : '' ?></h1>
+
+    <h2>Quick track </h2>
+    
 
 </div>
     
