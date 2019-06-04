@@ -1,21 +1,13 @@
-<?php session_start(); ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Home / Sign-In</title>
-</head>
-<body>
-<div class="container">
+<?php session_start(); 
+include_once 'inc/layout/header.php';
+include_once 'inc/layout/navbar.php';
+?>
+
+<div class="container mt-4">
     <section>
-        <h2>Welcome to Care</h2>
+        <h2>Welcome to Self-Cared</h2>
         <h3>Login</h3>    
-        <form action="page.php" method="POST">
+        <form action="home.php" method="POST">
             <label for="email">Email</label>
             <br><br>
             <input type="email" name="email" id="email" required>
@@ -58,6 +50,7 @@
 
         $row = $result->fetch_assoc();
         $_SESSION['first_name'] = $row['first_name'];
+        $_SESSION['user_id'] = $row['user_id'];
 
         header('location: user_home.php');
         
@@ -70,10 +63,4 @@
     }
 
     ?>
-
-<!-- jQuery -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
+<?php include_once 'inc/layout/footer.php'; ?>

@@ -1,18 +1,18 @@
 <?php  //landing page after successful login 
 //starting new user session
 session_start();
-
+if (!isset($_SESSION['user_id'])){
+    header('location: home.php');
+}
+include_once 'inc/layout/header.php';
+include_once 'inc/layout/navbar.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to our great site <?= isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'New User!' ?></h1>
+<div class="container">
+
+    <h1>Welcome to Self-Cared <?= isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'New User!' ?></h1>
+
+</div>
     
-</body>
-</html>
+
+
+<?php include_once 'inc/layout/footer.php'; ?>
