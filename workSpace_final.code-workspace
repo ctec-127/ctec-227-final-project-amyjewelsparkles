@@ -4,8 +4,13 @@
 			"path": "."
 		},
 		{
-			"name": "ctec-227-php-jquery-sql-demo",
-			"path": "C:\\xampp\\htdocs\\ctec-227-php-jquery-sql-demo"
+			"path": "C:\\xampp\\htdocs\\clarkbook"
+		},
+		{
+			"path": "C:\\xampp\\htdocs\\PHP-I\\project-no-3-amyjewelsparkles"
+		},
+		{
+			"path": "C:\\Users\\Amina\\Desktop\\javascript"
 		}
 	],
 	"settings": {}

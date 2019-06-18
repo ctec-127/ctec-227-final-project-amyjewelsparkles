@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php session_start();
+$pageTitle = 'Register'; 
 include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
 
@@ -19,170 +20,188 @@ include_once 'inc/layout/navbar.php';
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $password = hash('sha512',$_POST['password']);
-        $gender = $_POST['gender'];
-        $dob = $_POST['dob'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip = $_POST['zip'];
-        $phone = $_POST['phone'];
+        $date = date("Y-m-d");
+        $interest = $_POST['interest'];
 
-        $sql = "INSERT INTO user (email,first_name,last_name,password,gender,dob,address,city,state,zip,phone) 
-                VALUES('$email','$first_name','$last_name','$password','$gender','$dob', '$address','$city','$state','$zip','$phone')";
+        $sql = "INSERT INTO user (email,first_name,last_name,password,interest,date_registered) 
+                VALUES('$email','$first_name','$last_name','$password','$interest','$date')";
         // echo $sql;
         $result = $db->query($sql);
 
         if (!$result) {
             echo "<h3>There was a problem registering your account</h3>";
         } else {
-            echo "<h3>Successfully Registered! Please login to acce the site.</h3>";
+            echo "<h3>Successfully Registered! Please login to access the site.</h3>";
         }
     }
 ?>
+    <div class="row">
+        <div class="col-6">
+            <hr>
+            <h2>Register</h2>
+            <hr>
+            <p>Please fill out this form to create an account. All fields are required.</p>
+            <h3>Already a user? <a href="home.php">Click here to Sign-In</a></h3>
+            <?php echo (isset($message)) ? $message : ''; ?>
+            <div id="errors" class="text-danger ml-4"></div>   
 
-<div class="container mt-4">
-
-    <h1>Register</h1>
-    <form action="register.php" method="POST">
-
-        <div class="form-group" id="first">
-            <label for="first_name">First Name<br>
-                <input type="text" name="first_name" id="first_name" maxlength="20" placeholder="first">
-            </label>
-            <label for="last_name">Last Name<br>
-                <input type="text" name="last_name" id="last_name" maxlength="20">
-            </label>
         </div>
-    
-        <span id="gender_span">
-            <div class="form-check form-check-inline pl-3" id="gender">
+        <div class="col-1"></div>
+        <div id="registerdiv" class="col-md-4 bg-light">
+            <form action="register.php" method="POST">
+                <label for="first_name">First Name<br>
+                    <input class="form-control" type="text" name="first_name" id="first_name" maxlength="20" <?php echo (isset($first_name)) ? 'value="'.$first_name.'"' : 'placeholder="First"'; ?>>
+                </label>
                 <br>
-                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                <label class="form-check-label" for="male">Male</label>
-                
-                <input class="form-check-input ml-4" type="radio" name="gender" id="female" value="female">
-                <label class="form-check-label" for="female">Female</label>
+                <label for="last_name">Last Name<br>
+                    <input class="form-control" type="text" name="last_name" id="last_name" maxlength="20" <?php echo (isset($last_name)) ? 'value="'.$last_name.'"' : 'placeholder="Last"'; ?>>
+                </label>
+                <br>
+                <label for="email">Email
+                    <input class="form-control" type="email" id="email" name="email" <?php echo (isset($email)) ? 'value="'.$email.'"' : 'placeholder="e-mail"'; ?>>
+                </label>
+                <br>
+                <label for="password">Password:</label>
+                    <input type="checkbox" id="show" onclick="showPassword('password')"><label for="show"><i class="far fa-eye"></i></label>
+                    <input class="form-control" type="password" id="password" name="password" <?php echo (isset($_POST['password'])) ? 'value="'.$_POST['password'].'"' : ''; ?>>
+                <br>
+                <label for="password2">Re-enter Password:</label>
+                    <input type="checkbox" id="show2" onclick="showPassword('password2')"><label for="show2"><i class="far fa-eye"></i></label>
+                    <input class="form-control" type="password" id="password2" name="password2" <?php echo (isset($_POST['password2'])) ? 'value="'.$_POST['password2'].'"' : ''; ?>>
+                <br>
+                <label for="interest">What are you most intersted in?
+                    <select class="form-control" name="interest" id="interest">
+                        <option value="">--Select--</option>
+                        <option value="1">Mental Health Wellness</option>
+                        <option value="2">Reducing Stress</option>
+                        <option value="3">Tracking Anxiety</option>
+                        <option value="4">Tracking Depression</option>
+                        <option value="5">Physical Wellness</option>
+                    </select>
+                </label>
+                    <br><br><input class="btn mybutton" type="submit" value="Create Account" id="submit">
+            </form>
+        </div>
+        <div class="col-1"></div>
+    </div><!-- end of row-->
 
-                <input class="form-check-input ml-4" type="radio" name="gender" id="none" value="none">
-                <label class="form-check-label" for="none">Prefer Not to Answer</label>
-            </div>
-        </span> 
-        <br><br> 
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" required name="dob" min="2000-01-02">
-        <br><br>       
-        <br>       
-        <label for="email">Email</label>
-        <input type="email" id="email" required name="email">
-        <br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" required name="password">
-        <br><br>
-        <label for="password2">Re-Enter Password:</label>
-        <input type="password" id="password2" required name="password2">
-        <br><br>
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" required name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
-        <br><br>
-        
-        <div class="form-group">
-            <label for="address">Address<br>
-                <input type="text" name="address" id="address" maxlength="40">
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="city">City<br>
-                <input type="text" name="city" id="city" maxlength="30">
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="state">State</label>
-            <select name="state" id="state">
-                <option value="" selected="selected">Select a State</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-            </select>
-        </div>
+</div><!-- End of main div mentioned in header / Must include-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
-        <div class="form-group">
-            <label for="zip">Zip Code<br>
-                <input type="text" pattern="[0-9]{5}" title="Five digit zip code" name="zip" id="zip">
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="description">What are you most intersted in?</label>
-            <select name="description" id="description">
-                <option value="">--Select--</option>
-                <option value="1">Mental Health Wellness</option>
-                <option value="2">Reducing Stress</option>
-                <option value="3">Tracking Anexiety</option>
-                <option value="4">Tracking Depression</option>
-                <option value="5">Physical Wellness</option>
-            </select>
-        </div>   
-        
-        <h4>Terms and Conditions</h4>
-        <span id="terms_span">
-            <div class="form-group form-check-inline pl-3"></div>
-                <input class="form-check-input" type="checkbox" id="terms" value="accept" name="terms">
-                <label class="form-check-label pl-3" for="terms">I Accept</label>
-                <br><br><input class="btn btn-primary" type="submit" value="Submit" id="submit">
-            </div>
-        </span>
-    </form>
-    <p>    
-    <h3>Already a user? <a href="home.php">Click here to Sign-In</a></h3>
-    </p>
-</div>
+<script>
+    $(document).ready(function(){
+        //$('#registerdiv').fadeIn("slow");
+        // $('#formdiv').fadeIn("slow");
+        $('#first_name').focus();
 
+    });
+    function showPassword(p) {
+        var x = document.getElementById(p);
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+    
+    var bucket = [];
+    var flag = 0;
+
+    $('#submit').on('click', function(evt){
+        bucket = [];
+        flag = 0;
+
+    //check first name
+        if ($('#first_name').val() === ''){
+            flag++;
+            bucket.push(['first_name','First Name is Required']);
+            $('#errfirst').remove();
+            $('#first_name').after('<span id="errfirst">(Required)</span>');   
+        }
+    //last name
+        if ($('#last_name').val() === ''){
+            flag++;
+            bucket.push(['last_name', 'Last Name is Required']);
+            $('#errlast').remove();  
+            $('#last_name').after('<span class="inline" id="errlast">(Required)</span>');   
+
+        }
+        if ($('#email').val() === ''){
+            flag++;
+            bucket.push(['email', 'Email is Required']);
+            $('#erremail').remove();  
+            $('#email').after('<span class="inline" id="erremail">(Required)</span>');   
+
+        }
+        if ($('#password').val() === ''){
+            flag++;
+            bucket.push(['password', 'Password is Required']);
+            $('#errpassword').remove();  
+            $('#password').after('<span class="inline" id="errpassword">(Required)</span>');   
+        }
+        if ($('#password2').val() !== $('#password').val()) {
+            flag++;
+            bucket.push(['password2', 'Passwords Do Not Match']);
+            $('#errpassword2').remove();  
+            $('#password2').after('<span class="inline" id="errpassword2">(Required)</span>');   
+        }
+        //interests
+        if ($('#interest').val() === ''){
+            flag++;
+            bucket.push(['Interest', 'Please Select an Interest']);   
+            $('#errinterest').remove();  
+            $('#interest').after('<span id="errinterest">(Required)</span>');
+        }
+    //terms
+        var terms = $('#terms:checked').val();
+        if (terms === undefined) {
+            flag++;
+            bucket.push(['terms','You must Accept the Terms and Conditions']);
+            $('#errterms').remove();  
+            $('#terms_span').after('<span id="errterms">(Required)</span>');   
+            $('#terms_span').css({'border': '1px solid orange', 'padding': '10px'});
+        }
+    //preventing default and error bucket    
+        if (flag > 0){
+            console.log("errors: " + flag);
+            evt.preventDefault();
+            var error_bucket = '';
+        //displaying error bucket    
+            for (let index = 0; index < bucket.length; index++) {
+                error_bucket += '<li>' + bucket[index][1] + '</li>';   
+            }
+            $('#submit').attr('disabled','true');
+            $('#errors').html('<ul>' + error_bucket + '</ul>');
+            $('#' + bucket[0][0]).focus();
+        }
+    }) //end of on.submit()
+
+    $('#first_name').on('change',function(){
+        $('#errfirst').remove();
+        $("#submit").removeAttr('disabled');
+    })
+    $('#last_name').on('change',function(){
+        $('#errlast').remove();
+        $("#submit").removeAttr('disabled');
+    })
+
+    $('#email').on('change',function(){
+        $('#erremail').remove();
+        $("#submit").removeAttr('disabled');
+    })
+    $('#password').on('change',function(){
+        $('#errpassword').remove();
+        $("#submit").removeAttr('disabled');
+    })
+    $('#password2').on('change',function(){
+        $('#errpassword2').remove();
+        $("#submit").removeAttr('disabled');
+    })
+    $('#interest').on('change',function(){
+        $('#errinterest').remove();
+        $("#submit").removeAttr('disabled');
+    })
+    
+</script>
 
 <?php include_once 'inc/layout/footer.php'; ?>

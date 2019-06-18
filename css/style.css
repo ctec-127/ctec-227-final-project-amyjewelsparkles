@@ -4,4 +4,158 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    background-image: url('../img/bg_home.jpg');
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-attachment: fixed;
+    background-size: auto;
 }
+
+
+.login {
+    background-color: #D3D3D3;
+    border-radius: 4px;
+}
+#logindiv {
+    /* display: none; */
+    border: 2px solid #29ac2a;
+    /* background-color: #FFFFFF; */
+    border-radius: 25px;
+    padding: 20px;
+}
+#registerdiv{
+    /* display: none; */
+    background-color: #FFFFFF;
+    border: 2px solid #29ac2a;
+    border-radius: 25px;
+    padding: 20px;
+}
+.mybutton{
+    /* background-color: #b379cc; */
+    background-color: #9b54b9;
+    color: #FFFFFF;
+}
+#trackdiv, #day {
+    border: 2px solid #29ac2a;
+    /* background-color: #FFFFFF; */
+    border-radius: 25px;
+    padding: 20px;
+}
+.levelspan {
+    border: 4px solid grey;
+    border-radius: 8px;
+    background-color: #4dc04d;
+    color: #FFFFFF;
+    padding: 5px;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;   
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+  
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #9b54b9;
+    cursor: pointer;
+}
+  
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #9b54b9;
+    cursor: pointer;
+}
+.slider:hover {
+    opacity: 1;
+  }
+
+.levelspan{
+    border: 1px solid grey;
+    background-color: #29ac2a;
+    color: #FFFFFF;
+    padding: 5px;
+}
+input {
+    outline: none;
+  }
+  
+input:focus,
+input:active {
+    border-color: transparent;
+    border: 1px solid yellowgreen;
+}
+
+input[type=text]:focus,
+input[type=text]:active,
+input[type=email]:focus,
+input[type=email]:active {
+    border-color: transparent;
+    border: 1px solid yellowgreen;
+}
+.sleepspan {
+
+    border: 1px solid grey;
+    border-radius: 8px;
+    background-color: #f48847;
+    color: #FFFFFF;
+    padding: 5px;
+}
+
+#show, #show2{
+    display: none;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+    /* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.tooltip .tooltiptext {
+    width: 120px;
+    bottom: 100%;
+    left: 50%; 
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
