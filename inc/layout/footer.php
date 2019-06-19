@@ -3,8 +3,8 @@
 ?>
 
 <div class="row">
-    <div class="col-lg-12">
-        <p class="text-center mt-4"><span class="font-weight-bold">Self-Cared - Version 1.0</span><br>&copy; 2019 - Self-Cared</p>
+    <div class="col-lg-12 text-center mt-4">
+        <p class="" id="footerdiv"><strong>Self <i id="footerlogo" class="fas fa-hand-holding-heart"></i> Cared - Version 1.0</strong>  &copy; 2019 - Self-Cared</p>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -10,6 +10,8 @@ include_once 'inc/layout/navbar.php';
 <?php 
     $user_id = $_SESSION['user_id'];
     $heading = '';
+    $message = '';
+    $flag = false;
 
     if(isset($_GET['id'])){
         $db = new mysqli('localhost','root','','care');
@@ -24,7 +26,7 @@ include_once 'inc/layout/navbar.php';
         $result = $db->query($sql); 
 
         if($db->affected_rows == 1){
-            $heading = 'Successfully deleted that record';
+            $heading = '<span class="alert alert-success mes">Successfully deleted Log for '. $_GET['deldate'].'</span>';
         } else {
             header('location: home.php');
         }
@@ -43,8 +45,9 @@ function history(){
     $db->set_charset('utf8');
 
     $history_result = $db->query($history_sql);
-
+    
     if ($history_result->num_rows > 0) {
+        echo '<span class="alert alert-success mes">Results Found!</span><br>';
         while ($row = $history_result->fetch_assoc()){
             $id = $row['symptom_id'];
             $date = $row['log_date'];
@@ -74,12 +77,12 @@ function history(){
                 $class = 'alert alert-danger';
             }
 
-            echo '<div class="col-md-12 border border-success rounded bg-white text-dark my-3 p-3">';
+            echo '<div class="col-md-12 my-3 p-3 historydiv mes">';
                 echo '<div class="row">';
                     echo '<div class="col-2 text-center">Daily Score<br><h6 class="'. $class . '">'. $score . '</h6></div>';
                     echo '<div class="col-6 "><h2 class="p-2">Daily Log</h2></div>';
                     echo '<div class="col-3 "><h5 class="p-3"><i class="fas fa-calendar-day"></i> ' . $date . '</h5><strong>Triggers</strong></div>';
-                    echo '<div class="col-1 text-center">'.'<a href="history.php?id='. $id .'" onclick=deleteRecord()><span id="del"><i class="fas fa-trash"></i> Delete?</span></a></div>';
+                    echo '<div class="col-1 text-center">'.'<a href="history.php?id='. $id .'&deldate='.$date.'" onclick=deleteRecord()><span id="del"><i class="fas fa-trash"></i> Delete</span></a></div>';
                 echo '</div>';
                 echo '<div class="row">';
                     echo '<div class="col-2">';
@@ -110,10 +113,9 @@ function history(){
         }
 
         $flag = true;
-        $heading = '<div class="alert alert-warning">Results Found!</div>';
     } else {
         $flag = false;
-        $heading = '<div class="alert alert-warning">No Records found!</div>';
+        echo '<br><span class="alert alert-warning mes">No Logs found! You can enter <a href="track.php"> Daily Log Here </a>to get started.</span><br>';
     }
 } //end of history function
 ?>
@@ -141,8 +143,8 @@ function history(){
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-        //$('#logindiv').fadeIn("slow");
-        //$('#email').focus();
+        $('.mes').fadeIn("slow");
+        
     });
     function deleteRecord(){
         var check = confirm("Are you sure you want to delete?");

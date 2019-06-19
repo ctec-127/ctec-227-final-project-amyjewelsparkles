@@ -1,7 +1,6 @@
 <?php // user profile page
 session_start();
-unset($_SESSION['user_id']);
-session_destroy();
+
 $pageTitle = 'Welcome to Self-Cared';  
 include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
@@ -9,8 +8,8 @@ include_once 'inc/layout/navbar.php';
 
 
 <div class="container">
-    <h2>You have successfully logged out!</h2>
-    <p>You will be redirected in a <strong> <span class="" id="time">5</span> </strong>seconds... <br><a href="home.php">Click here to login again.</a>
+    <h2>Successfully Registered!</h2>
+    <p>You will be redirected to home page in a <strong> <span class="" id="time">5</span> </strong>seconds... <br>
     </p>
 
 </div>
@@ -20,7 +19,7 @@ include_once 'inc/layout/navbar.php';
 <script>
     $(document).ready(function(){
         var a = setInterval(countdown,1000);
-        window.setTimeout(function(){window.location.href = "home.php"},5000);
+        window.setTimeout(function(){window.location.href = "user_home.php"},5000);
    
     });
     function countdown(){

@@ -5,7 +5,7 @@ include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
 ?>
 
-<div class="row">
+<div class="row historydiv">
     <div class="col-8">
         <hr>
         <h2>Privacy Policy</h2>

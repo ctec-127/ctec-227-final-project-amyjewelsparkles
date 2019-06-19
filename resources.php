@@ -4,7 +4,7 @@ $pageTitle = 'Self Cared - Resources';
 include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
 ?>
-<div class="row">
+<div class="row historydiv" >
         <div class="col-6">
             <hr>
             <h2>Useful Resources</h2>

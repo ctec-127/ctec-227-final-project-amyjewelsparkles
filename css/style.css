@@ -23,13 +23,36 @@ body {
     border-radius: 25px;
     padding: 20px;
 }
-#registerdiv{
+#registerdiv {
     /* display: none; */
     background-color: #FFFFFF;
     border: 2px solid #29ac2a;
     border-radius: 25px;
     padding: 20px;
 }
+
+.historydiv {
+    /* display: none; */
+    background-color: #FFFFFF;
+    border: 2px solid #29ac2a;
+    border-radius: 25px;
+    padding: 20px;
+}
+#footerdiv {
+    /* display: none; */
+    display: inline;
+    background-color: #FFFFFF;
+    opacity: 0.8;
+    border: 1px solid #29ac2a;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none; 
+    color:#9b54b9;
+}
+
 .mybutton{
     /* background-color: #b379cc; */
     background-color: #9b54b9;
@@ -47,6 +70,9 @@ body {
     background-color: #4dc04d;
     color: #FFFFFF;
     padding: 5px;
+}
+#footerlogo{
+    color:#9b54b9;  
 }
 .slider {
     -webkit-appearance: none;
@@ -89,21 +115,30 @@ body {
 }
 input {
     outline: none;
-  }
-  
-input:focus,
-input:active {
-    border-color: transparent;
-    border: 1px solid yellowgreen;
 }
-
+  
+  
 input[type=text]:focus,
 input[type=text]:active,
 input[type=email]:focus,
-input[type=email]:active {
+input[type=email]:active, 
+input[type=password]:focus,
+input[type=password]:active{
     border-color: transparent;
-    border: 1px solid yellowgreen;
+    border: 2px solid yellowgreen;
 }
+input:focus,
+input:active {
+    border-color: transparent;
+    border: 2px solid yellowgreen;
+}
+
+
+.myselect:focus {
+    border-color: transparent;
+    border: 2px solid yellowgreen;
+}
+
 .sleepspan {
 
     border: 1px solid grey;
@@ -113,7 +148,7 @@ input[type=email]:active {
     padding: 5px;
 }
 
-#show, #show2{
+#show, #show2, #showold {
     display: none;
 }
 
@@ -159,3 +194,8 @@ input[type=email]:active {
     border-style: solid;
     border-color: black transparent transparent transparent;
   }
+
+.mes {
+    display: none;
+    margin-bottom: 30px;
+}

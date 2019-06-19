@@ -85,7 +85,7 @@ include_once 'inc/layout/navbar.php';
             <hr>
             <h2>Update Profile</h2>
             <hr>
-            <p>Use this form to to update your account. 
+            <p>Use this form to to update your account. <br>
                 If no password is entered, your password will NOT be changed.</p>
 
             <?php echo $heading ?>
@@ -111,19 +111,19 @@ include_once 'inc/layout/navbar.php';
                 <label for="oldpassword">Old Password:</label>
                     <label for="showold"><input type="checkbox" id="showold" onclick="showPassword('oldpassword')"><i class="far fa-eye"></i></label>
                     <input class="form-control" type="password" id="oldpassword" name="oldpassword">
-                <br>
+                
 
                 <label for="newpassword">New Password:</label>
                     <input type="checkbox" id="show" onclick="showPassword('newpassword')"><label for="show"><i class="far fa-eye"></i></label>
                     <input class="form-control" type="password" id="newpassword" name="newpassword">
-                <br>
+                
                 <label for="password2">Re-enter Password:</label>
                     <input type="checkbox" id="show2" onclick="showPassword('password2')"><label for="show2"><i class="far fa-eye"></i></label>
                     <input class="form-control" type="password" id="password2" name="password2">
                 
                 <br>
                 <label for="interest">What are you most intersted in?
-                    <select class="form-control" name="interest" id="interest">
+                    <select class="form-control myselect" name="interest" id="interest">
                         <option value="">--Select--</option>
                         <option value="1" <?php echo ($select==1) ? 'selected' : ''; ?>>Mental Health Wellness</option>
                         <option value="2" <?php echo ($select==2) ? 'selected' : ''; ?>>Reducing Stress</option>
