@@ -2,14 +2,14 @@
 session_start();
 unset($_SESSION['user_id']);
 session_destroy();
-$pageTitle = 'Welcome to Self-Cared';  
+$pageTitle = 'Redirecting...';  
 include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
 ?>
 
 
 <div class="container">
-    <h2>You have successfully logged out!</h2>
+    <h2 class="alert alert-success">You have successfully logged out!</h2>
     <p>You will be redirected in a <strong> <span class="" id="time">5</span> </strong>seconds... <br><a href="home.php">Click here to login again.</a>
     </p>
 

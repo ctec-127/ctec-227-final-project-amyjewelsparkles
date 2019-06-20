@@ -93,7 +93,7 @@ include_once 'inc/layout/navbar.php';
         $user_id = $_SESSION['user_id'];
         $date = date("Y-m-d");
 
-        $note = $_POST['note'];
+        $note = $db->real_escape_string($_POST['note']);
         
         if ($flag){
             $sql = "UPDATE daily_log SET note='$note'
@@ -137,7 +137,7 @@ include_once 'inc/layout/navbar.php';
                     <label for="note"><strong>Quick Note : <?php echo (isset($date)) ? $date : ''; ?></strong></label>
                     <div class="row">
                         <div class="col">
-                            <textarea class="form-control" rows="5" cols="50" name="note" id="note" <?php echo (!isset($note)) ? 'placeholder="Use this space to log your thoughs, feelings, frusterations etc...">' : '>'.$note; ?></textarea>
+                            <textarea class="form-control" rows="5" cols="50" name="note" id="note" <?php echo (!isset($note)) ? 'placeholder="Use this space to log your thoughts, feelings, frusterations etc...">' : '>'.$note; ?></textarea>
                         </div>
                     </div>
                 <br>

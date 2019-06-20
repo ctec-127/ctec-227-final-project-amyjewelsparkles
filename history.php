@@ -28,7 +28,9 @@ include_once 'inc/layout/navbar.php';
         if($db->affected_rows == 1){
             $heading = '<span class="alert alert-success mes">Successfully deleted Log for '. $_GET['deldate'].'</span>';
         } else {
-            header('location: home.php');
+            if (!isset($_SESSION['user_id'])){
+                header('location: home.php');
+            }
         }
     }
 
@@ -47,11 +49,12 @@ function history(){
     $history_result = $db->query($history_sql);
     
     if ($history_result->num_rows > 0) {
-        echo '<span class="alert alert-success mes">Results Found!</span><br>';
+
         while ($row = $history_result->fetch_assoc()){
             $id = $row['symptom_id'];
             $date = $row['log_date'];
             $sleep = $row['sleep'];
+            $sleep_issue = $row['sleep_issue'];
             $physical = $row['physical'];
             $activity = $row['activity'];
             $stress = $row['stress'];
@@ -82,13 +85,13 @@ function history(){
                     echo '<div class="col-2 text-center">Daily Score<br><h6 class="'. $class . '">'. $score . '</h6></div>';
                     echo '<div class="col-6 "><h2 class="p-2">Daily Log</h2></div>';
                     echo '<div class="col-3 "><h5 class="p-3"><i class="fas fa-calendar-day"></i> ' . $date . '</h5><strong>Triggers</strong></div>';
-                    echo '<div class="col-1 text-center">'.'<a href="history.php?id='. $id .'&deldate='.$date.'" onclick=deleteRecord()><span id="del"><i class="fas fa-trash"></i> Delete</span></a></div>';
+                    echo "<div class=\"col-1 text-center\"><a href=\"history.php?id={$id}&deldate={$date}\" onclick=\"return confirm('Are you sure you want to Delete log for: {$date}?');\"><span id=\"del\"><i class=\"fas fa-trash\"></i> Delete</span></a></div>";
                 echo '</div>';
                 echo '<div class="row">';
                     echo '<div class="col-2">';
                         echo '<i class="fas fa-weight"></i> Weight: '. $weight;
-                        echo '<br><i class="fas fa-bed"></i> Sleep: '. $sleep; 
-                        echo '<br><i class="fas fa-walking"></i>   Active: '. $physical ." (". $activity.")";
+                        echo '<br><i class="fas fa-bed"></i> Sleep: '. $sleep ." (".$sleep_issue.")"; 
+                        echo '<br><i class="fas fa-walking"></i>   Active: '. $physical ." (".$activity.")";
                     echo '</div>';
                     echo '<div class="col-6">';
                         echo '<p>'. $note.'</p>';
@@ -127,7 +130,8 @@ function history(){
         <hr>
         <h2>History</h2>
         <hr>
-        <p>This page displays previously logged data.<br> You can look at daily log summary and compare scores and triggers for that day. A score of 20 or less indicates good mental health. A score of 21-35 suggest poor mental health. Continuous higher score should be evaluated by a medical professional to help diagnose and treat any undlying medical conditions. </p>
+        <p>This page displays previously logged data.<br> You can look at daily log summary and compare scores and triggers for that day. A score of 20 or less indicates good mental health. A score of 21-35 suggest poor mental health. Continuous higher score should be evaluated by a medical professional to help diagnose and treat any underlying medical conditions. </p>
+        <p class="text-center"><span class="alert alert-success mes">0-20 Good</span>  &nbsp;&nbsp;&nbsp;&nbsp;   <span class="alert alert-warning mes">21-27 Not Good</span>  &nbsp;&nbsp;&nbsp;&nbsp;   <span class="alert alert-danger mes">28-35 Bad</span></p>
         <hr>
         <?php history(); ?>
 
@@ -146,16 +150,7 @@ function history(){
         $('.mes').fadeIn("slow");
         
     });
-    function deleteRecord(){
-        var check = confirm("Are you sure you want to delete?");
-        if (check == true) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
+   
 
 </script>
 

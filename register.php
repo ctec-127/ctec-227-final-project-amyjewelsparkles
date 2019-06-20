@@ -21,46 +21,62 @@ include_once 'inc/layout/navbar.php';
         $last_name = $_POST['last_name'];
         $password = hash('sha512',$_POST['password']);
         $date = date("Y-m-d");
-        $interest = $_POST['interest'];
+        $select = $_POST['interest'];
+        $message = "hello";
 
-        $sql = "INSERT INTO user (email,first_name,last_name,password,interest,date_registered) 
-                VALUES('$email','$first_name','$last_name','$password','$interest','$date')";
-        // echo $sql;
-        $result = $db->query($sql);
+        //checking to see if email already exists
+        $emailsql = "SELECT * FROM user WHERE email='$email'";
+        
+        $emailresult = $db->query($emailsql);
 
-        if (!$result) {
-            echo "<h3>There was a problem registering your account</h3>";
+        if ($emailresult->num_rows > 0) {
+            $message = '<div class="alert alert-danger msg">Email Already Exists.</div>';
         } else {
-            $db = new mysqli('localhost','root','','care');
-
-            # If there was an error connecting to the database
-            if ($db->connect_error) {
-                $error = $db->connect_error;
-                echo $error;
-            }
-            # Set the character encoding of the database connection to UTF-8
-            $db->set_charset('utf8');
-
-            $email = $_POST['email'];
-            $password = hash('sha512',$_POST['password']);
-
-            $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
-            //  echo $sql;
-
+            $sql = "INSERT INTO user (email,first_name,last_name,password,interest,date_registered) VALUES('$email','$first_name','$last_name','$password','$select','$date')";
+            // echo $sql;
             $result = $db->query($sql);
-            if ($result->num_rows == 1) {
 
-                $_SESSION['loggedin'] = 1;
-                $_SESSION['email'] = $email;
+            if (!$result) {
+                echo "<h3>There was a problem registering your account</h3>";
+            } else {
+                $db = new mysqli('localhost','root','','care');
 
-                $row = $result->fetch_assoc();
-                $_SESSION['first_name'] = $row['first_name'];
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['interest'] = $row['interest'];
+                # If there was an error connecting to the database
+                if ($db->connect_error) {
+                    $error = $db->connect_error;
+                    echo $error;
+                }
+                # Set the character encoding of the database connection to UTF-8
+                $db->set_charset('utf8');
 
-                header('location: redirect_login.php');
+                $email = $_POST['email'];
+                $password = hash('sha512',$_POST['password']);
+
+                $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
+                //  echo $sql;
+                
+
+                $result = $db->query($sql);
+                if ($result->num_rows == 1) {
+
+                    $_SESSION['loggedin'] = 1;
+                    $_SESSION['email'] = $email;
+
+                    $row = $result->fetch_assoc();
+                    $_SESSION['first_name'] = $row['first_name'];
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['interest'] = $row['interest'];
+
+                    header('location: redirect_login.php');
+                }
             }
         }
+
+        
+
+
+
+
     }
 ?>
     <div class="row">
@@ -70,7 +86,7 @@ include_once 'inc/layout/navbar.php';
             <hr>
             <p>Please fill out this form to create an account. All fields are required.</p>
             <h3>Already a user? <a href="home.php">Click here to Sign-In</a></h3>
-            <?php echo (isset($message)) ? $message : ''; ?>
+            <?php echo (isset($message)) ? $message: ''; ?>
             <div id="errors" class="text-danger ml-4"></div>   
 
         </div>
@@ -100,11 +116,11 @@ include_once 'inc/layout/navbar.php';
                 <label for="interest">What are you most intersted in?
                     <select class="form-control myselect" name="interest" id="interest">
                         <option value="">--Select--</option>
-                        <option value="1">Mental Health Wellness</option>
-                        <option value="2">Reducing Stress</option>
-                        <option value="3">Tracking Anxiety</option>
-                        <option value="4">Tracking Depression</option>
-                        <option value="5">Physical Wellness</option>
+                        <option value="1" <?php echo (isset($select) && $select==1) ? 'selected' : ''; ?>>Mental Health Wellness</option>
+                        <option value="2" <?php echo (isset($select) && $select==2) ? 'selected' : ''; ?>>Reducing Stress</option>
+                        <option value="3" <?php echo (isset($select) && $select==3) ? 'selected' : ''; ?>>Tracking Anxiety</option>
+                        <option value="4" <?php echo (isset($select) && $select==4) ? 'selected' : ''; ?>>Tracking Depression</option>
+                        <option value="5" <?php echo (isset($select) && $select==5) ? 'selected' : ''; ?>>Physical Wellness</option>
                     </select>
                 </label>
                     <br><br><input class="btn mybutton" type="submit" value="Create Account" id="submit">
@@ -118,8 +134,9 @@ include_once 'inc/layout/navbar.php';
 
 <script>
     $(document).ready(function(){
-        //$('#registerdiv').fadeIn("slow");
-        // $('#formdiv').fadeIn("slow");
+        setTimeout(function(){
+            $('.msg').fadeOut(5000)
+        },5000);
         $('#first_name').focus();
 
     });

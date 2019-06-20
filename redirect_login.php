@@ -1,14 +1,14 @@
 <?php // user profile page
 session_start();
 
-$pageTitle = 'Welcome to Self-Cared';  
+$pageTitle = 'Redirecting...';  
 include_once 'inc/layout/header.php';
 include_once 'inc/layout/navbar.php';
 ?>
 
 
 <div class="container">
-    <h2>Successfully Registered!</h2>
+    <h2 class="alert alert-success">Successfully Registered!</h2>
     <p>You will be redirected to home page in a <strong> <span class="" id="time">5</span> </strong>seconds... <br>
     </p>
 

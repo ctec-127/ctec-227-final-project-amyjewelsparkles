@@ -33,6 +33,7 @@ include_once 'inc/layout/navbar.php';
     if ($fetch_result->num_rows == 1) {
         while ($row = $fetch_result->fetch_assoc()){
             $sleep = $row['sleep'];
+            $sleep_issue = $row['sleep_issue'];
             $physical = $row['physical'];
             $stress = $row['stress'];
             $stresstrig = $row['stresstrig'];
@@ -47,48 +48,49 @@ include_once 'inc/layout/navbar.php';
             $weight = $row['weight'];
             $note = $row['note'];
             $score = $row['score'];
+
         }
         
-        // switch ($sleep) {
-        //     case '1':
-        //         $sleep = 5;
-        //         break;
-        //     case '2':
-        //         $sleep = 4;
-        //         break;
-        //     case '3':
-        //         $sleep = 3;
-        //         break;
-        //     case '4':
-        //         $sleep = 2;
-        //         break;
-        //     case '5':
-        //         $sleep = 1;
-        //         break;
-        //     default:
-        //         $sleep = $sleep;
-        //         break;
-        // }
-        // switch ($physical) {
-        //     case '1':
-        //         $physical = 5;
-        //         break;
-        //     case '2':
-        //         $physical = 4;
-        //         break;
-        //     case '3':
-        //         $physical = 3;
-        //         break;
-        //     case '4':
-        //         $physical = 2;
-        //         break;
-        //     case '5':
-        //         $physical = 1;
-        //         break;
-        //     default:
-        //         $physical = $physical;
-        //         break;
-        // }
+        switch ($sleep) {
+            case '1':
+                $sleep = 5;
+                break;
+            case '2':
+                $sleep = 4;
+                break;
+            case '3':
+                $sleep = 3;
+                break;
+            case '4':
+                $sleep = 2;
+                break;
+            case '5':
+                $sleep = 1;
+                break;
+            default:
+                $sleep = $sleep;
+                break;
+        }
+        switch ($physical) {
+            case '1':
+                $physical = 5;
+                break;
+            case '2':
+                $physical = 4;
+                break;
+            case '3':
+                $physical = 3;
+                break;
+            case '4':
+                $physical = 2;
+                break;
+            case '5':
+                $physical = 1;
+                break;
+            default:
+                $physical = $physical;
+                break;
+        }
 
         $flag = true;
         $heading = '<div class="alert alert-warning">You Have already saved Daily Log for '. $date .'.  You can make changes and update.</div>';
@@ -130,9 +132,10 @@ include_once 'inc/layout/navbar.php';
     
         $date = date("Y-m-d");
 
-        $sleep = $_POST['sleep'];
-        $physical = $_POST['physical'];
-        $activity = $_POST['activity'];
+        $sleep = $db->real_escape_string($_POST['sleep']);
+        $sleep_issue = $db->real_escape_string($_POST['sleep_issue']);
+        $physical = $db->real_escape_string($_POST['physical']);
+        $activity = $db->real_escape_string($_POST['activity']);
         switch ($sleep) {
             case '5':
                 $sleepsc = 1;
@@ -186,16 +189,16 @@ include_once 'inc/layout/navbar.php';
         $score = $sleepsc+$physicalsc+$stress+$anxiety+$depression+$mania+$anger;
         
         $weight = $_POST['weight'];
-        $note = $_POST['note'];
+        $note = $db->real_escape_string($_POST['note']);
         
         if ($flag){
-            $sql = "UPDATE daily_log SET sleep='$sleep',physical='$physical',activity='$activity',stress='$stress',stresstrig='$stresstrig',anxiety='$anxiety',anxietytrig='$anxietytrig',depression='$depression',depressiontrig='$depressiontrig',mania='$mania',maniatrig='$maniatrig',anger='$anger',angertrig='$angertrig',weight='$weight',note='$note',score='$score'
+            $sql = "UPDATE daily_log SET sleep='$sleepsc',sleep_issue='$sleep_issue',physical='$physicalsc',activity='$activity',stress='$stress',stresstrig='$stresstrig',anxiety='$anxiety',anxietytrig='$anxietytrig',depression='$depression',depressiontrig='$depressiontrig',mania='$mania',maniatrig='$maniatrig',anger='$anger',angertrig='$angertrig',weight='$weight',note='$note',score='$score'
             WHERE user_id=". $user_id . " AND log_date=". '"' . $date .'"';
             //echo $sql;
             $heading = '<div class="alert alert-success" role="alert">Successfully Updated!</div>';
         }else {
-            $sql = "INSERT INTO daily_log(user_id,log_date,sleep,physical,activity,stress,stresstrig,anxiety,anxietytrig,depression,depressiontrig,mania,maniatrig,anger,angertrig,weight,note,score) 
-            VALUES('$user_id','$date','$sleep','$physical','$activity','$stress','$stresstrig','$anxiety','$anxietytrig','$depression','$depressiontrig','$mania','$maniatrig','$anger','$angertrig','$weight','$note','$score')";
+            $sql = "INSERT INTO daily_log(user_id,log_date,sleep,sleep_issue,physical,activity,stress,stresstrig,anxiety,anxietytrig,depression,depressiontrig,mania,maniatrig,anger,angertrig,weight,note,score) 
+            VALUES('$user_id','$date','$sleepsc','$sleep_issue','$physicalsc','$activity','$stress','$stresstrig','$anxiety','$anxietytrig','$depression','$depressiontrig','$mania','$maniatrig','$anger','$angertrig','$weight','$note','$score')";
             //echo $sql;
             $heading = '<div class="alert alert-success" role="alert">Successfully Inserted Data! </div>';
         }
@@ -228,7 +231,7 @@ include_once 'inc/layout/navbar.php';
     <div class="row">
         <?php echo (isset($score))? '<div class="col-2 text-center">Daily Score<br><h6 class="'. $class . '">'. $score . '</h6></div>' : ''; ?>
         <div class="col-10">
-            <h3>Use this page to track your Daily Activity and Mental Health </h3>
+            <h3 class="alert alert-light">Use this page to track your Daily Activity and Mental Health </h3>
         </div>
     </div>
     <form action="track.php" method="POST">
@@ -239,7 +242,7 @@ include_once 'inc/layout/navbar.php';
                 <div class="col-8">
                     <?php echo $heading; ?>
                 </div>
-                <div class="col-2">Triggers</div>
+                <div class="col-2">Cause/Trigger</div>
             </div>
                     <div class="row my-auto">
                     <div class="col-2">
@@ -252,7 +255,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="sleepspan" id="sleepLevel" onLoad="levelsleep('#sleep','#sleepLevel','Hours')">0-2 Hours</div>
                     </div>
                     <div class="col-2">
-                        
+                        <input type="text" class="form-control" name="sleep_issue" id="sleep_issue" maxlength="40" <?php echo (isset($sleep_issue) && $sleep_issue != '') ? 'value="'. $sleep_issue .'"' : 'placeholder="Sleep Issues?"'; ?>> 
                     </div>
                 </div>
             <br>   
@@ -267,7 +270,7 @@ include_once 'inc/layout/navbar.php';
                     <div class="sleepspan" id="physicalLevel" onload="levelphysical('#physical','#physicalLevel')">0-15 Minutes</div>
                 </div>
                 <div class="col-2">
-                    <input type="text" class="form-control" name="activity" id="activity" maxlength="40" <?php echo (isset($activity)) ? 'value="'. $activity .'"' : 'placeholder="Activity?"'; ?>>
+                    <input type="text" class="form-control" name="activity" id="activity" maxlength="40" <?php echo (isset($activity) && $activity != '') ? 'value="'. $activity .'"' : 'placeholder="Activity?"'; ?>>
                 </div>
             </div>
             <br>                     
@@ -282,7 +285,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="levelspan" id="stressLevel">Not Stressed</div>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="stresstrig" id="stresstrig" maxlength="40" <?php echo (isset($stresstrig)) ? 'value="'. $stresstrig .'"' : 'placeholder="Trigger?"'; ?>>
+                        <input type="text" class="form-control" name="stresstrig" id="stresstrig" maxlength="40" <?php echo (isset($stresstrig) && $stresstrig != '') ? 'value="'. $stresstrig .'"' : 'placeholder="Why?"'; ?>>
                     </div>
                 </div>
             <br>
@@ -297,7 +300,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="levelspan" id="anxietyLevel">Not Anxious</div>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="anxietytrig" id="anxietytrig" maxlength="40" <?php echo (isset($anxietytrig)) ? 'value="'. $anxietytrig .'"' : 'placeholder="Trigger?"'; ?>>
+                        <input type="text" class="form-control" name="anxietytrig" id="anxietytrig" maxlength="40" <?php echo (isset($anxietytrig) && $anxietytrig != '') ? 'value="'. $anxietytrig .'"' : 'placeholder="Why?/How?"'; ?>>
                     </div>
                 </div>
             <br>
@@ -312,7 +315,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="levelspan" id="depressionLevel">Not Depressed</div>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="depressiontrig" id="depressiontrig" maxlength="40" <?php echo (isset($depressiontrig)) ? 'value="'. $depressiontrig .'"' : 'placeholder="Trigger?"'; ?>>
+                        <input type="text" class="form-control" name="depressiontrig" id="depressiontrig" maxlength="40" <?php echo (isset($depressiontrig) && $depressiontrig != '') ? 'value="'. $depressiontrig .'"' : 'placeholder="Trigger?"'; ?>>
                     </div>
                 </div>
             <br>
@@ -327,7 +330,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="levelspan" id="maniaLevel">Not Manic</div>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="maniatrig" id="maniatrig" maxlength="40" <?php echo (isset($maniatrig)) ? 'value="'. $maniatrig .'"' : 'placeholder="Trigger?"'; ?>>
+                        <input type="text" class="form-control" name="maniatrig" id="maniatrig" maxlength="40" <?php echo (isset($maniatrig) && $maniatrig != '') ? 'value="'. $maniatrig .'"' : 'placeholder="Trigger?"'; ?>>
                     </div>
                 </div>
             <br>
@@ -342,7 +345,7 @@ include_once 'inc/layout/navbar.php';
                         <div class="levelspan" id="angerLevel">Not Angry</div>
                     </div>
                     <div class="col-2">
-                        <input type="text" class="form-control" name="angertrig" id="angertrig" maxlength="40" <?php echo (isset($angertrig)) ? 'value="'.$angertrig .'"' : 'placeholder="Trigger?"'; ?>>
+                        <input type="text" class="form-control" name="angertrig" id="angertrig" maxlength="40" <?php echo (isset($angertrig) && $angertrig != '') ? 'value="'.$angertrig .'"' : 'placeholder="Trigger?"'; ?>>
                     </div>
                 </div>
             <br>
